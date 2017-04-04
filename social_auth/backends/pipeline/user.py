@@ -120,8 +120,11 @@ def update_user_details(backend, details, response, user=None, is_new=False,
     if user is None:
         return
 
-    changed = False  # flag to track changes
-
+    changed = False  # flag to track change
+    email = details.get('email', None)
+    if isinstance(email, dict):
+        email = email.get('email', '')
+    details['email'] = email
     for name, value in details.iteritems():
         # do not update username, it was already generated, do not update
         # configured fields if user already existed
@@ -129,6 +132,5 @@ def update_user_details(backend, details, response, user=None, is_new=False,
             if value and value != getattr(user, name, None):
                 setattr(user, name, value)
                 changed = True
-
     if changed:
         user.save()

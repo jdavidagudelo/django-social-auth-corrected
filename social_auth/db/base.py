@@ -166,6 +166,8 @@ class UserSocialAuthMixin(object):
         """Case insensitive search"""
         # Do case-insensitive match, since real-world email address is
         # case-insensitive.
+        if isinstance(email, dict):
+            email = email.get(u'email', '')
         return cls.user_model().objects.get(email__iexact=email)
 
     @classmethod
