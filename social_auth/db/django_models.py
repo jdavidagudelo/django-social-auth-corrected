@@ -1,6 +1,6 @@
 """Django ORM models for Social Auth"""
 from django.db import models
-from django.db.models.loading import get_model
+from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
 
 from social_auth.db.base import UserSocialAuthMixin, AssociationMixin, \
@@ -68,7 +68,7 @@ class UserSocialAuth(models.Model, UserSocialAuthMixin):
 
     @classmethod
     def user_model(cls):
-        return get_model(*USER_MODEL.split('.'))
+        return get_user_model()
 
 
 class Nonce(models.Model, NonceMixin):
